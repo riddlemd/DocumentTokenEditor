@@ -1,4 +1,5 @@
 ﻿using DocumentTokenEditor.Tokenization.Schemes;
+using Microsoft.Extensions.Options;
 using System.Text.RegularExpressions;
 
 namespace DocumentTokenEditor.Tokenization
@@ -6,9 +7,12 @@ namespace DocumentTokenEditor.Tokenization
     public class TokenService : ITokenService
     {
         private readonly List<ITokenScheme> _schemes = [];
+        private readonly IOptions<TokenServiceOptions> _tokenServiceOptions;
 
-        public TokenService()
+        public TokenService(IOptions<TokenServiceOptions> tokenServiceOptions)
         {
+            _tokenServiceOptions = tokenServiceOptions;
+
             _schemes.Add(new TextTokenScheme());
             _schemes.Add(new ColorTokenScheme());
         }
@@ -17,9 +21,11 @@ namespace DocumentTokenEditor.Tokenization
         {
             var tokens = new List<Token>();
 
-            var matches = new Regex(@"\{\{([a-zA-Z0-9]+):([a-zA-Z0-9]+)\}\}", RegexOptions.CultureInvariant | RegexOptions.Compiled).Matches(text);
+            var pattern = GetTokenStart() + @"([a-zA-Z0-9]+)" + GetTokenDivider() + @"([a-zA-Z0-9]+)" + GetTokenEnd();
 
-            foreach (Match match in matches)
+            var matches = new Regex(pattern, RegexOptions.CultureInvariant | RegexOptions.Compiled).Matches(text);
+
+            foreach (Match match in matches.Cast<Match>())
             {
                 var schema = ParseSchemaFromString(match.Groups[2].Value);
 
@@ -40,7 +46,9 @@ namespace DocumentTokenEditor.Tokenization
         {
             foreach(var token in tokens)
             {
-                text = new Regex("{{" + $"{token.Name}:{token.Scheme.Name}" + "}}").Replace(text, token.Value, 1);
+                var pattern = GetTokenStart() + token.Name + GetTokenDivider() + token.Scheme.Name + GetTokenEnd();
+
+                text = new Regex(pattern).Replace(text, token.Value, 1);
             }
 
             return text;
@@ -53,5 +61,14 @@ namespace DocumentTokenEditor.Tokenization
 
             return _schemes.FirstOrDefault(x => x.Name.Equals(schemaName, StringComparison.OrdinalIgnoreCase));
         }
+
+        private string GetTokenStart()
+            => Regex.Escape(_tokenServiceOptions.Value.TokenStart);
+
+        private string GetTokenEnd()
+            => Regex.Escape(_tokenServiceOptions.Value.TokenEnd);
+
+        private string GetTokenDivider()
+            => Regex.Escape(_tokenServiceOptions.Value.TokenDivider);
     }
 }
