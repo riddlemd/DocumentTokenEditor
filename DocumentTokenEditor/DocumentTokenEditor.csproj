@@ -40,34 +40,42 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
 	  <ApplicationTitle>Document Token Editor</ApplicationTitle>
+	  <ApplicationId>com.riddtech.documenttokeneditor</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
 	  <ApplicationTitle>Document Token Editor</ApplicationTitle>
+	  <ApplicationId>com.riddtech.documenttokeneditor</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
 	  <ApplicationTitle>Document Token Editor</ApplicationTitle>
+	  <ApplicationId>com.riddtech.documenttokeneditor</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
 	  <ApplicationTitle>Document Token Editor</ApplicationTitle>
+	  <ApplicationId>com.riddtech.documenttokeneditor</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
 	  <ApplicationTitle>Document Token Editor</ApplicationTitle>
+	  <ApplicationId>com.riddtech.documenttokeneditor</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
 	  <ApplicationTitle>Document Token Editor</ApplicationTitle>
+	  <ApplicationId>com.riddtech.documenttokeneditor</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
 	  <ApplicationTitle>Document Token Editor</ApplicationTitle>
+	  <ApplicationId>com.riddtech.documenttokeneditor</ApplicationId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
 	  <ApplicationTitle>Document Token Editor</ApplicationTitle>
+	  <ApplicationId>com.riddtech.documenttokeneditor</ApplicationId>
 	</PropertyGroup>
 
 	<ItemGroup>
