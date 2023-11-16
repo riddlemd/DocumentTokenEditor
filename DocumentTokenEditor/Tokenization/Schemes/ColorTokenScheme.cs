@@ -11,7 +11,7 @@ namespace DocumentTokenEditor.Tokenization.Schemes
             //
         }
 
-        public override View GetView(Action<string> valueHandler)
+        public override View GetEditorView(Action<string> valueHandler)
         {
             var grid = new Grid
             {

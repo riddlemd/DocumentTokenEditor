@@ -77,7 +77,7 @@ namespace DocumentTokenEditor
 
                     grid.Add(label, 0, 0);
 
-                    var view = token.Scheme.GetView((value) =>
+                    var view = token.Scheme.GetEditorView((value) =>
                     {
                         token.Value = value;
                     });

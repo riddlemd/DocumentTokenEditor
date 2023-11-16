@@ -4,6 +4,6 @@
     {
         public string Name { get; private set; } = name;
 
-        public abstract View GetView(Action<string> valueHandler);
+        public abstract View GetEditorView(Action<string> valueHandler);
     }
 }

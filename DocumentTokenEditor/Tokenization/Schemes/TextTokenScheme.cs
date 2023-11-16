@@ -10,7 +10,7 @@
             //
         }
 
-        public override View GetView(Action<string> valueHandler)
+        public override View GetEditorView(Action<string> valueHandler)
         {
             var view = new Entry();
             view.TextChanged += (s, e) =>

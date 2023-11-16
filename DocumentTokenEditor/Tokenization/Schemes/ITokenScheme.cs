@@ -4,6 +4,6 @@
     {
         public string Name { get; }
 
-        public View GetView(Action<string> valueHandler);
+        public View GetEditorView(Action<string> valueHandler);
     }
 }
