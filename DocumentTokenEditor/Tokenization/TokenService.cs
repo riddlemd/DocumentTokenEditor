@@ -10,6 +10,7 @@ namespace DocumentTokenEditor.Tokenization
         public TokenService()
         {
             _schemes.Add(new TextTokenScheme());
+            _schemes.Add(new ColorTokenScheme());
         }
 
         public List<Token> GetTokensFromString(string text)
