@@ -1,5 +1,6 @@
 ﻿using DocumentTokenEditor.Tokenization;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
 
 namespace DocumentTokenEditor
 {
@@ -10,6 +11,7 @@ namespace DocumentTokenEditor
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

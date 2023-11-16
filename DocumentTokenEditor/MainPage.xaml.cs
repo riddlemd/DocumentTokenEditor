@@ -1,5 +1,6 @@
-﻿using DocumentTokenEditor.Tokenization;
-using System.Text.Json;
+﻿using CommunityToolkit.Maui.Storage;
+using DocumentTokenEditor.Tokenization;
+using System.Text;
 
 namespace DocumentTokenEditor
 {
@@ -44,19 +45,26 @@ namespace DocumentTokenEditor
                         HorizontalTextAlignment = TextAlignment.Center
                     });
 
+                    SaveFileFlyoutItem.IsEnabled = false;
+
                     return;
                 }
 
-                foreach(var token in _tokens)
+                SaveFileFlyoutItem.IsEnabled = true;
+
+                foreach (var token in _tokens)
                 {
                     var grid = new Grid()
                     {
                         ColumnDefinitions = [
                             new()
                             {
-                                Width = 200
+                                Width = new GridLength(1, GridUnitType.Star)
                             },
                             new()
+                            {
+                                Width = new GridLength(5, GridUnitType.Star)
+                            }
                         ],
                     };
 
@@ -64,6 +72,7 @@ namespace DocumentTokenEditor
                     {
                         Text = token.Name,
                         VerticalTextAlignment = TextAlignment.Center,
+                        LineBreakMode = LineBreakMode.TailTruncation
                     };
 
                     grid.Add(label, 0, 0);
@@ -84,7 +93,7 @@ namespace DocumentTokenEditor
                     var border = new Border
                     {
                         Padding = new(10),
-                        Margin = new(0, 10),
+                        Margin = new(0, 5),
                         Content = grid,
                     };
 
@@ -97,11 +106,24 @@ namespace DocumentTokenEditor
             }
         }
 
-        private void SaveFileFlyoutItem_Clicked(object sender, EventArgs e)
+        private async void SaveFileFlyoutItem_Clicked(object sender, EventArgs e)
         {
-            var output = _tokenService.ApplyTokensToString(_tokens, _fileContent);
+            var outputContent = _tokenService.ApplyTokensToString(_tokens, _fileContent);
 
-            System.Diagnostics.Debug.WriteLine(output);
+            var ms = new MemoryStream(Encoding.UTF8.GetBytes(outputContent));
+
+            var fileInfo = new FileInfo(TargetUri.Text);
+
+            var outputName = $"{fileInfo.Name[..(fileInfo.Extension.Length+1)]}_output{fileInfo.Extension}";
+
+            var startingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            var result = await FileSaver.Default.SaveAsync(startingDirectory, outputName, ms);
+
+            if (result == null)
+                return;
+
+            System.Diagnostics.Debug.WriteLine(outputContent);
         }
     }
 
