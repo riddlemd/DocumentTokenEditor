@@ -1,7 +1,7 @@
-﻿using DocumentTokenEditor.Tokenization;
-using Microsoft.Extensions.Logging;
-using CommunityToolkit.Maui;
+﻿using CommunityToolkit.Maui;
+using DocumentTokenEditor.Tokenization;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace DocumentTokenEditor
 {
@@ -31,12 +31,12 @@ namespace DocumentTokenEditor
 
             // Services
             builder.Services.AddTransient<ITokenService, TokenService>();
-            
+
             // Pages
             builder.Services.AddTransient<MainPage>();
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

@@ -10,15 +10,48 @@
             //
         }
 
-        public override View GetEditorView(Action<string> valueHandler)
+        public override View GetEditorView(Token token)
         {
-            var view = new Entry();
-            view.TextChanged += (s, e) =>
+            var grid = new Grid();
+
+            var maxLength = token.TokenSettings?.MaxLength ?? int.MaxValue;
+
+            var entry = new Entry()
             {
-                valueHandler(e.NewTextValue);
+                Text = token.TokenSettings?.DefaultValue,
+                MaxLength = maxLength
             };
 
-            return view;
+            var maxLengthLabel = new Label
+            {
+                VerticalTextAlignment = TextAlignment.End,
+                HorizontalTextAlignment = TextAlignment.End,
+                Text = GetMaxLengthString(token.TokenSettings?.DefaultValue?.Length, maxLength),
+                FontSize = 12
+            };
+
+            grid.Add(maxLengthLabel);
+
+            entry.TextChanged += (s, e) =>
+            {
+                token.Value = e.NewTextValue;
+
+                maxLengthLabel.Text = GetMaxLengthString(e.NewTextValue.Length, maxLength);
+            };
+
+            grid.Add(entry);
+
+            return grid;
+        }
+
+        private static string? GetMaxLengthString(int? currentLength, int maxLength)
+        {
+            if (maxLength == int.MaxValue)
+                return null;
+
+            currentLength ??= 0;
+
+            return $"{currentLength}/{maxLength}";
         }
     }
 }

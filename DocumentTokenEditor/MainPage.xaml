@@ -15,7 +15,7 @@
             <Border Padding="10" Margin="10, 0">
                 <VerticalStackLayout>
                     <Label Text="Target" />
-                    <Entry x:Name="TargetUri" Placeholder="No File Loaded" IsReadOnly="True"/>
+                    <Entry x:Name="TargetUri" Placeholder="No File Loaded" IsReadOnly="True" />
                 </VerticalStackLayout>
             </Border>
             <Border Padding="10" Margin="10" x:Name="TokenBorder" IsVisible="False">

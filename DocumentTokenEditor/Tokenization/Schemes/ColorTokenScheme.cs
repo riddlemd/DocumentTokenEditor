@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Converters;
-
-namespace DocumentTokenEditor.Tokenization.Schemes
+﻿namespace DocumentTokenEditor.Tokenization.Schemes
 {
     public class ColorTokenScheme : BaseTokenScheme
     {
@@ -11,7 +9,7 @@ namespace DocumentTokenEditor.Tokenization.Schemes
             //
         }
 
-        public override View GetEditorView(Action<string> valueHandler)
+        public override View GetEditorView(Token token)
         {
             var grid = new Grid
             {
@@ -24,10 +22,14 @@ namespace DocumentTokenEditor.Tokenization.Schemes
                 ]
             };
 
+            if (!Color.TryParse(token.TokenSettings?.DefaultValue, out var defaultColor))
+                defaultColor = Colors.Black;
+
             var label = new Label
             {
-                Text = "Invalid Color",
+                Text = token.TokenSettings?.DefaultValue == null ? "Invalid Color" : "",
                 TextColor = Colors.White,
+                BackgroundColor = defaultColor,
                 VerticalTextAlignment = TextAlignment.Center,
                 HorizontalTextAlignment = TextAlignment.Center,
                 LineBreakMode = LineBreakMode.TailTruncation
@@ -35,10 +37,15 @@ namespace DocumentTokenEditor.Tokenization.Schemes
 
             grid.Add(label, 1, 0);
 
-            var entry = new Entry();
+            var entry = new Entry()
+            {
+                Text = token.TokenSettings?.DefaultValue,
+                MaxLength = token.TokenSettings?.MaxLength ?? int.MaxValue
+            };
+
             entry.TextChanged += (s, e) =>
             {
-                valueHandler(e.NewTextValue);
+                token.Value = e.NewTextValue;
 
                 try
                 {
@@ -46,7 +53,7 @@ namespace DocumentTokenEditor.Tokenization.Schemes
                     label.BackgroundColor = color;
                     label.Text = "";
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     label.BackgroundColor = Colors.Black;
                     label.Text = "Invalid Color";
