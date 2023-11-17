@@ -7,7 +7,8 @@
 			"MaxLength": 32
 		},
 		"ProductDescription": {
-			"Type": "MultiLineText"
+			"Type": "MultiLineText",
+			"NewlineToBr": true
 		},
 		"Category": {
 			"Type": "Select",
