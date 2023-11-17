@@ -1,10 +1,10 @@
 ﻿namespace DocumentTokenEditor.Tokenization.Schemes
 {
-    public class TextTokenScheme : BaseTokenScheme
+    public class SingleLineTextTokenScheme : BaseTokenScheme
     {
-        private const string _name = "Text";
+        private const string _name = "SingleLineText";
 
-        public TextTokenScheme()
+        public SingleLineTextTokenScheme()
             : base(_name)
         {
             //

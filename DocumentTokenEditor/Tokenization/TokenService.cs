@@ -14,7 +14,8 @@ namespace DocumentTokenEditor.Tokenization
         {
             _tokenServiceOptions = tokenServiceOptions;
 
-            _schemes.Add(new TextTokenScheme());
+            _schemes.Add(new SingleLineTextTokenScheme());
+            _schemes.Add(new MultiLineTextTokenScheme());
             _schemes.Add(new ColorTokenScheme());
         }
 

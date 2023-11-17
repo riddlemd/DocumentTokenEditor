@@ -8,6 +8,11 @@
             <MenuFlyoutItem x:Name="LoadFileFlyoutItem" Text="Load File" Clicked="LoadFileFlyoutItem_Clicked"/>
             <MenuFlyoutItem x:Name="SaveFileFlyoutItem" Text="Save File" Clicked="SaveFileFlyoutItem_Clicked" IsEnabled="False"/>
         </MenuBarItem>
+        <MenuBarItem Text="Templates">
+            <MenuFlyoutItem Text="Web Banner 1"/>
+            <MenuFlyoutItem Text="Web Banner 2"/>
+            <MenuFlyoutItem Text="Mobile Pill"/>
+        </MenuBarItem>
     </ContentPage.MenuBarItems>
 
     <ScrollView Orientation="Vertical">
