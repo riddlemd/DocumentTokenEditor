@@ -22,7 +22,7 @@ namespace DocumentTokenEditor.Tokenization
         {
             var tokens = new List<Token>();
 
-            var pattern = $"{GetTokenStart(parserManifest?.TokenFormat)}([a-zA-Z0-9]+)({GetTokenDivider(parserManifest?.TokenFormat)})?([a-zA-Z0-9]*){GetTokenEnd(parserManifest?.TokenFormat)}";
+            var pattern = string.Format("{0}([a-zA-Z0-9]+)({1})?([a-zA-Z0-9]*){2}", GetTokenStart(parserManifest?.TokenFormat), GetTokenDivider(parserManifest?.TokenFormat), GetTokenEnd(parserManifest?.TokenFormat));
 
             var matches = new Regex(pattern, RegexOptions.CultureInvariant | RegexOptions.Compiled).Matches(text);
 
@@ -53,7 +53,7 @@ namespace DocumentTokenEditor.Tokenization
 
             foreach (var token in tokens)
             {
-                var pattern = $"{GetTokenStart(parserManifest?.TokenFormat)}{token.Name}({GetTokenDivider(parserManifest?.TokenFormat)})?[^{GetTokenEnd(parserManifest?.TokenFormat)}]*{GetTokenEnd(parserManifest?.TokenFormat)}";
+                var pattern = string.Format("{0}({1})?[^{2}]*{2}", GetTokenStart(parserManifest?.TokenFormat), GetTokenDivider(parserManifest?.TokenFormat), GetTokenEnd(parserManifest?.TokenFormat));
 
                 text = new Regex(pattern).Replace(text, token.Value ?? "", 1);
             }
