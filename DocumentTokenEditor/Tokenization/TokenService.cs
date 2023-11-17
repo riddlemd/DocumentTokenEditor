@@ -53,7 +53,7 @@ namespace DocumentTokenEditor.Tokenization
 
             foreach (var token in tokens)
             {
-                var pattern = string.Format("{0}({1})?[^{2}]*{2}", GetTokenStart(parserManifest?.TokenFormat), GetTokenDivider(parserManifest?.TokenFormat), GetTokenEnd(parserManifest?.TokenFormat));
+                var pattern = string.Format("{0}{1}({2})?[^{3}]*{3}", GetTokenStart(parserManifest?.TokenFormat), token.Name, GetTokenDivider(parserManifest?.TokenFormat), GetTokenEnd(parserManifest?.TokenFormat));
 
                 text = new Regex(pattern).Replace(text, token.Value ?? "", 1);
             }
