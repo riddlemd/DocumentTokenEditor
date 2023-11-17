@@ -1,4 +1,6 @@
-﻿namespace DocumentTokenEditor.Tokenization.Schemes
+﻿using System.Text.Encodings.Web;
+
+namespace DocumentTokenEditor.Tokenization.Schemes
 {
     public class MultiLineTextTokenScheme : BaseTokenScheme
     {
@@ -20,7 +22,8 @@
             {
                 Text = token.TokenSettings?.DefaultValue,
                 MaxLength = maxLength,
-                HeightRequest = 200
+                HeightRequest = 200,
+                Placeholder = token.TokenSettings?.Placeholder
             };
 
             var maxLengthLabel = new Label
@@ -35,7 +38,12 @@
 
             editor.TextChanged += (s, e) =>
             {
-                token.Value = e.NewTextValue;
+                var value = e.NewTextValue;
+
+                if (token.TokenSettings?.NlToBr ?? false)
+                    value = value.Replace("\r", "<br>\r");
+
+                token.Value = value;
 
                 maxLengthLabel.Text = GetMaxLengthString(e.NewTextValue.Length, maxLength);
             };

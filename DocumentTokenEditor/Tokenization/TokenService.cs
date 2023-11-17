@@ -17,6 +17,7 @@ namespace DocumentTokenEditor.Tokenization
             _schemes.Add(new SingleLineTextTokenScheme());
             _schemes.Add(new MultiLineTextTokenScheme());
             _schemes.Add(new ColorTokenScheme());
+            _schemes.Add(new SelectTokenScheme());
         }
 
         public List<Token> GetTokensFromString(string text, TokenParserManifest? parserManifest = null)
