@@ -1,10 +1,10 @@
-﻿namespace DocumentTokenEditor.Tokenization.Schemes
+﻿namespace DocumentTokenEditor.Tokenization.Types
 {
-    public class ColorTokenScheme : BaseTokenScheme
+    public class ColorTokenType : BaseTokenType
     {
         private const string _name = "Color";
 
-        public ColorTokenScheme() : base(_name)
+        public ColorTokenType() : base(_name)
         {
             //
         }

@@ -1,14 +1,14 @@
-﻿using DocumentTokenEditor.Tokenization.Schemes;
+﻿using DocumentTokenEditor.Tokenization.Types;
 
 namespace DocumentTokenEditor.Tokenization
 {
-    public class Token(string name, ITokenScheme scheme, TokenSettings? tokenSettings)
+    public class Token(string name, ITokenType type, TokenSettings? tokenSettings)
     {
         public string Name { get; } = name;
 
         public string? Value { get; set; } = tokenSettings?.DefaultValue;
 
-        public ITokenScheme Scheme { get; } = scheme;
+        public ITokenType Type { get; } = type;
 
         public TokenSettings? TokenSettings { get; } = tokenSettings;
     }

@@ -1,6 +1,6 @@
-﻿namespace DocumentTokenEditor.Tokenization.Schemes
+﻿namespace DocumentTokenEditor.Tokenization.Types
 {
-    public abstract class BaseTokenScheme(string name) : ITokenScheme
+    public abstract class BaseTokenType(string name) : ITokenType
     {
         public string Name { get; private set; } = name;
 

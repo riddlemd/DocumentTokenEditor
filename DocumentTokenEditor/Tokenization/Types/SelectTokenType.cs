@@ -1,20 +1,22 @@
-﻿namespace DocumentTokenEditor.Tokenization.Schemes
+﻿namespace DocumentTokenEditor.Tokenization.Types
 {
-    public class SelectTokenScheme : BaseTokenScheme
+    public class SelectTokenType : BaseTokenType
     {
         private const string _name = "Select";
 
-        public SelectTokenScheme()
+        public SelectTokenType()
             : base(_name)
         {
         }
 
         public override View GetEditorView(Token token)
         {
-            var options = token.TokenSettings?.Options ?? [];
+            var options = token.TokenSettings?.SelectOptions ?? [];
 
-            var picker = new Picker();
-            picker.ItemsSource = options.Keys.ToList();
+            var picker = new Picker
+            {
+                ItemsSource = options.Keys.ToList()
+            };
 
             picker.SelectedIndexChanged += (object? sender, EventArgs e) =>
             {

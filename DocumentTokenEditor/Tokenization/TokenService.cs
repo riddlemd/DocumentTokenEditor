@@ -1,4 +1,4 @@
-﻿using DocumentTokenEditor.Tokenization.Schemes;
+﻿using DocumentTokenEditor.Tokenization.Types;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -7,17 +7,17 @@ namespace DocumentTokenEditor.Tokenization
 {
     public class TokenService : ITokenService
     {
-        private readonly List<ITokenScheme> _schemes = [];
+        private readonly List<ITokenType> _tokenTypes = [];
         private readonly IOptions<TokenServiceOptions> _tokenServiceOptions;
 
         public TokenService(IOptions<TokenServiceOptions> tokenServiceOptions)
         {
             _tokenServiceOptions = tokenServiceOptions;
 
-            _schemes.Add(new SingleLineTextTokenScheme());
-            _schemes.Add(new MultiLineTextTokenScheme());
-            _schemes.Add(new ColorTokenScheme());
-            _schemes.Add(new SelectTokenScheme());
+            _tokenTypes.Add(new SingleLineTextTokenType());
+            _tokenTypes.Add(new MultiLineTextTokenType());
+            _tokenTypes.Add(new ColorTokenType());
+            _tokenTypes.Add(new SelectTokenType());
         }
 
         public List<Token> GetTokensFromString(string text, TokenParserManifest? parserManifest = null)
@@ -34,13 +34,13 @@ namespace DocumentTokenEditor.Tokenization
 
                 var tokenSettings = parserManifest?.GetTokenSettingsByName(name);
 
-                var schemeName = !string.IsNullOrWhiteSpace(match.Groups[3].Value) ? match.Groups[3].Value : tokenSettings?.Scheme;
+                var typeName = !string.IsNullOrWhiteSpace(match.Groups[3].Value) ? match.Groups[3].Value : tokenSettings?.Type;
 
-                var schema = ParseSchemaFromString(schemeName);
+                var type = ParseSchemaFromString(typeName);
 
-                schema ??= _schemes.First();
+                type ??= _tokenTypes.First();
 
-                var token = new Token(name, schema, tokenSettings);
+                var token = new Token(name, type, tokenSettings);
 
                 tokens.Add(token);
             }
@@ -48,8 +48,11 @@ namespace DocumentTokenEditor.Tokenization
             return tokens;
         }
 
-        public string? ApplyTokensToString(IEnumerable<Token> tokens, string? text, TokenParserManifest? parserManifest = null)
+        public string? ApplyTokensToString(IEnumerable<Token>? tokens, string? text, TokenParserManifest? parserManifest = null)
         {
+            if (tokens is null)
+                return text;
+
             if (text is null)
                 return text;
 
@@ -76,18 +79,20 @@ namespace DocumentTokenEditor.Tokenization
 
                 return settings;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return null;
+                // Do nothing
             }
+
+            return null;
         }
 
-        private ITokenScheme? ParseSchemaFromString(string? schemaName)
+        private ITokenType? ParseSchemaFromString(string? schemaName)
         {
             if (schemaName == null)
                 return null;
 
-            return _schemes.FirstOrDefault(x => x.Name.Equals(schemaName, StringComparison.OrdinalIgnoreCase));
+            return _tokenTypes.FirstOrDefault(x => x.Name.Equals(schemaName, StringComparison.OrdinalIgnoreCase));
         }
 
         private string GetTokenStart(TokenFormat? tokenFormat = null)

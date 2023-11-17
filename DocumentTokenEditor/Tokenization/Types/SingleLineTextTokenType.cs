@@ -1,12 +1,10 @@
-﻿using System.Text.Encodings.Web;
-
-namespace DocumentTokenEditor.Tokenization.Schemes
+﻿namespace DocumentTokenEditor.Tokenization.Types
 {
-    public class MultiLineTextTokenScheme : BaseTokenScheme
+    public class SingleLineTextTokenType : BaseTokenType
     {
-        private const string _name = "MultiLineText";
+        private const string _name = "SingleLineText";
 
-        public MultiLineTextTokenScheme()
+        public SingleLineTextTokenType()
             : base(_name)
         {
             //
@@ -18,37 +16,36 @@ namespace DocumentTokenEditor.Tokenization.Schemes
 
             var maxLength = token.TokenSettings?.MaxLength ?? int.MaxValue;
 
-            var editor = new Editor()
+            var entry = new Entry()
             {
                 Text = token.TokenSettings?.DefaultValue,
                 MaxLength = maxLength,
-                HeightRequest = 200,
                 Placeholder = token.TokenSettings?.Placeholder
             };
 
             var maxLengthLabel = new Label
             {
                 VerticalTextAlignment = TextAlignment.End,
-                HorizontalTextAlignment = TextAlignment.Start,
+                HorizontalTextAlignment = TextAlignment.End,
                 Text = GetMaxLengthString(token.TokenSettings?.DefaultValue?.Length, maxLength),
                 FontSize = 12
             };
 
             grid.Add(maxLengthLabel);
 
-            editor.TextChanged += (s, e) =>
+            entry.TextChanged += (s, e) =>
             {
                 var value = e.NewTextValue;
 
-                if (token.TokenSettings?.NlToBr ?? false)
-                    value = value.Replace("\r", "<br>\r");
+                if (token.TokenSettings?.NewlineToBr ?? false)
+                    value = value.Replace("\r\n", "<br>\r\n");
 
                 token.Value = value;
 
                 maxLengthLabel.Text = GetMaxLengthString(e.NewTextValue.Length, maxLength);
             };
 
-            grid.Add(editor);
+            grid.Add(entry);
 
             return grid;
         }

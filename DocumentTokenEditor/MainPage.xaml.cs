@@ -9,7 +9,7 @@ namespace DocumentTokenEditor
     {
         private readonly ITokenService _tokenService;
         private string? _fileContent;
-        private TokenParserManifest _tokenParserManifest;
+        private TokenParserManifest? _tokenParserManifest;
         private List<Token>? _tokens;
 
         public MainPage(ITokenService tokenService)
@@ -99,7 +99,7 @@ namespace DocumentTokenEditor
 
                     var typeLabel = new Label
                     {
-                        Text = token.Scheme.Name,
+                        Text = token.Type.Name,
                         VerticalTextAlignment = TextAlignment.Center,
                         LineBreakMode = LineBreakMode.TailTruncation,
                         FontSize = 8,
@@ -110,7 +110,7 @@ namespace DocumentTokenEditor
 
                     grid.Add(flex, 0, 0);
 
-                    var view = token.Scheme.GetEditorView(token);
+                    var view = token.Type.GetEditorView(token);
 
                     view.HorizontalOptions = new()
                     {
@@ -130,7 +130,7 @@ namespace DocumentTokenEditor
                     TokenStack.Add(border);
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception) { }
             {
                 // The user canceled or something went wrong
             }
@@ -139,6 +139,9 @@ namespace DocumentTokenEditor
         private async void SaveFileFlyoutItem_Clicked(object sender, EventArgs e)
         {
             var outputContent = _tokenService.ApplyTokensToString(_tokens, _fileContent, _tokenParserManifest);
+
+            if (string.IsNullOrEmpty(outputContent))
+                return;
 
             var ms = new MemoryStream(Encoding.UTF8.GetBytes(outputContent));
 

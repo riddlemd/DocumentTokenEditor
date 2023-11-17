@@ -1,6 +1,6 @@
-﻿namespace DocumentTokenEditor.Tokenization.Schemes
+﻿namespace DocumentTokenEditor.Tokenization.Types
 {
-    public interface ITokenScheme
+    public interface ITokenType
     {
         public string Name { get; }
 
