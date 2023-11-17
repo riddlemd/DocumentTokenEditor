@@ -52,7 +52,14 @@ namespace DocumentTokenEditor
 
             var fileTokenSettingsUri = $"{uri}.dtes";
 
-            _tokenParserManifest = await _tokenService.LoadParserManifestFromFileAsync(fileTokenSettingsUri);
+            try
+            {
+                _tokenParserManifest = await _tokenService.LoadParserManifestFromFileAsync(fileTokenSettingsUri);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "Unable to parse .dtes file!", "Ok");
+            }
 
             _tokens = _tokenService.GetTokensFromString(_fileContent, _tokenParserManifest);
 

@@ -68,23 +68,14 @@ namespace DocumentTokenEditor.Tokenization
 
         public async Task<TokenParserManifest?> LoadParserManifestFromFileAsync(string uri)
         {
-            try
-            {
-                if (!File.Exists(uri))
-                    return null;
+            if (!File.Exists(uri))
+                return null;
 
-                var json = await File.ReadAllTextAsync(uri);
+            var json = await File.ReadAllTextAsync(uri);
 
-                var settings = JsonSerializer.Deserialize<TokenParserManifest>(json);
+            var settings = JsonSerializer.Deserialize<TokenParserManifest>(json);
 
-                return settings;
-            }
-            catch (Exception)
-            {
-                // Do nothing
-            }
-
-            return null;
+            return settings;
         }
 
         private ITokenType? ParseSchemaFromString(string? schemaName)
