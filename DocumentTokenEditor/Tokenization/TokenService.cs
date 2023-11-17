@@ -46,7 +46,7 @@ namespace DocumentTokenEditor.Tokenization
             return tokens;
         }
 
-        public string? ApplyTokensToString(IEnumerable<Token> tokens, string text, TokenParserManifest? parserManifest = null)
+        public string? ApplyTokensToString(IEnumerable<Token> tokens, string? text, TokenParserManifest? parserManifest = null)
         {
             if (text is null)
                 return text;
