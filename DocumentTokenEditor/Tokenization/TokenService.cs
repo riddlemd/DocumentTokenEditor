@@ -22,7 +22,7 @@ namespace DocumentTokenEditor.Tokenization
         {
             var tokens = new List<Token>();
 
-            var pattern = GetTokenStart(parserManifest?.TokenFormat) + @"([a-zA-Z0-9]+)(" + GetTokenDivider(parserManifest?.TokenFormat) + @")?([a-zA-Z0-9]*)" + GetTokenEnd(parserManifest?.TokenFormat);
+            var pattern = $"{GetTokenStart(parserManifest?.TokenFormat)}([a-zA-Z0-9]+)({GetTokenDivider(parserManifest?.TokenFormat)})?([a-zA-Z0-9]*){GetTokenEnd(parserManifest?.TokenFormat)}";
 
             var matches = new Regex(pattern, RegexOptions.CultureInvariant | RegexOptions.Compiled).Matches(text);
 
@@ -46,14 +46,14 @@ namespace DocumentTokenEditor.Tokenization
             return tokens;
         }
 
-        public string ApplyTokensToString(IEnumerable<Token> tokens, string text, TokenParserManifest? parserManifest = null)
+        public string? ApplyTokensToString(IEnumerable<Token> tokens, string text, TokenParserManifest? parserManifest = null)
         {
             if (text is null)
                 return text;
 
             foreach (var token in tokens)
             {
-                var pattern = GetTokenStart(parserManifest?.TokenFormat) + token.Name + @":?[^" + GetTokenEnd(parserManifest?.TokenFormat) + @"]*" + GetTokenEnd(parserManifest?.TokenFormat);
+                var pattern = $"{GetTokenStart(parserManifest?.TokenFormat)}{token.Name}({GetTokenDivider(parserManifest?.TokenFormat)})?[^{GetTokenEnd(parserManifest?.TokenFormat)}]*{GetTokenEnd(parserManifest?.TokenFormat)}";
 
                 text = new Regex(pattern).Replace(text, token.Value ?? "", 1);
             }
