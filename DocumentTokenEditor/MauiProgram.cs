@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using DocumentTokenEditor.Templating;
 using DocumentTokenEditor.Tokenization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -9,6 +10,8 @@ namespace DocumentTokenEditor
     {
         public static MauiApp CreateMauiApp()
         {
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
@@ -28,9 +31,11 @@ namespace DocumentTokenEditor
 
             // Options
             builder.Services.Configure<TokenServiceOptions>(builder.Configuration.GetSection("TokenService"));
+            builder.Services.Configure<TemplateServiceOptions>(builder.Configuration.GetSection("TemplateService"));
 
             // Services
             builder.Services.AddTransient<ITokenService, TokenService>();
+            builder.Services.AddTransient<ITemplateService, TemplateService>();
 
             // Pages
             builder.Services.AddTransient<MainPage>();

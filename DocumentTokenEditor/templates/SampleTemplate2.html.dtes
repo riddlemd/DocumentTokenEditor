@@ -1,0 +1,29 @@
+{
+	"TokenSettings": {
+		"SKU": {
+			"MaxLength": 128
+		},
+		"ProductName": {
+			"MaxLength": 32
+		},
+		"ProductDescription": {
+			"Type": "MultiLineText"
+		},
+		"Category": {
+			"Type": "Select",
+			"SelectOptions": {
+				"Kitchen": "kitchen_category",
+				"Bathroom": "bathroom_category",
+				"Living Room": "livingroom_category"
+			}
+		},
+		"Color": {
+			"Type": "Color",
+			"DefaultValue": "Purple"
+		}
+	},
+	"TokenFormat": {
+		"Start": "!!",
+		"End": "!!"
+	}
+}
