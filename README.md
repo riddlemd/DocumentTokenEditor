@@ -53,7 +53,7 @@ Feel free to read the first paragraph of my new book "{{BookName}}",
 
 ## .dtes Files
 
-.dtes files should be named the same as the file they are associated with. If the file is `MyDocument.html` than the .dtes file should be `MyDocument.html.dtes`
+.dtes files should be named the same as the file they are associated with and in the same folder. If the file is `MyDocument.html` than the .dtes file should be `MyDocument.html.dtes`
 
 ```json5
 {
